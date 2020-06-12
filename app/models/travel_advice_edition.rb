@@ -18,7 +18,7 @@ class TravelAdviceEdition
   field :change_description,   type: String
   field :minor_update,         type: Boolean
   field :update_type,          type: String,    default: "major"
-  field :synonyms,             type: Array,     default: []
+  field :synonyms,             type: Array, default: []
   # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
   field :published_at,         type: Time
   field :reviewed_at,          type: Time
@@ -81,6 +81,7 @@ class TravelAdviceEdition
     state :published do
       validate :cannot_edit_published
       validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on publish" }
+      validate :update_type_is_specified
     end
     state :archived do
       validate :cannot_edit_archived
@@ -154,6 +155,10 @@ class TravelAdviceEdition
   end
 
 private
+
+  def update_type_is_specified
+    errors.add(:update_type, "can't be blank on publish") if minor_update.nil?
+  end
 
   def state_for_slug_unique
     if %w[published draft].include?(state) &&
