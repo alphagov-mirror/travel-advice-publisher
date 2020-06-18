@@ -11,10 +11,9 @@ var adminEditionsForm = {
 
     function showOrHideChangeNotes() {
       if ($major_change_radio_button.prop('checked')){
-        $change_notes_section.show(200);
-      }
-      else {
-        $change_notes_section.slideUp(200);
+        $change_notes_section.removeClass("js-hidden")
+      } else {
+        $change_notes_section.addClass("js-hidden")
       }
     }
   }
