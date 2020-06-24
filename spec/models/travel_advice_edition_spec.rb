@@ -175,7 +175,7 @@ describe TravelAdviceEdition do
       end
 
       it "requires a major/minor change flag" do
-        ta = create(:travel_advice_edition, state: "draft", minor_update: nil)
+        ta = create(:travel_advice_edition, state: "draft", update_type: nil)
         ta.state = "published"
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:update_type]).to include("can't be blank on publish")
@@ -238,7 +238,7 @@ describe TravelAdviceEdition do
     end
 
     it "is neither a minor or major update" do
-      expect(TravelAdviceEdition.new.minor_update).to be_nil
+      expect(TravelAdviceEdition.new.update_type).to be_nil
     end
 
     context "populating version_number" do
@@ -270,7 +270,7 @@ describe TravelAdviceEdition do
       end
     end
 
-    it "is not minor_update" do
+    it "is not a minor update" do
       expect(TravelAdviceEdition.new.update_type).to_not eql("minor")
     end
   end

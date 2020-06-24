@@ -81,7 +81,7 @@ class TravelAdviceEdition
     state :published do
       validate :cannot_edit_published
       validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on publish" }
-      validates :update_type, presence: true
+      validates :update_type, presence: { message: "can't be blank on publish" }
     end
     state :archived do
       validate :cannot_edit_archived
